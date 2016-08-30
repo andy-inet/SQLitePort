@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Заявки</string>
+    <string name="title_item_detail">Заявка</string>
+    <string name="title_spec_list">Спецификация заявки</string>
+</resources>

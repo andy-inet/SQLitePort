@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <!--  <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="49dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/z_btn_edit"
+        android:background="@android:drawable/ic_menu_edit"
+        android:onClick="zajavEditClick"
+        android:nestedScrollingEnabled="false"
+        android:gravity="left"
+        android:layout_gravity="left" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="49dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/z_btn_delete"
+        android:background="@android:drawable/ic_menu_delete"
+        android:onClick="zajavDeleteClick"
+        android:gravity="left"
+        android:layout_gravity="left" />
+-->
+    <TextView
+        android:id="@+id/z_strcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:gravity="left"
+        android:layout_gravity="left" />
+
+    <TextView
+        android:id="@+id/z_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:gravity="left"
+        android:layout_gravity="left" />
+
+    <TextView
+        android:id="@+id/z_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:gravity="left"
+        android:layout_gravity="left" />
+
+    <TextView
+        android:id="@+id/z_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:gravity="left"
+        android:layout_gravity="left"
+        android:visibility="invisible" />
+</LinearLayout>
