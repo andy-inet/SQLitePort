@@ -1,4 +1,4 @@
-package com.example.cat.zajav;
+package com.example.cat.sqliteport;
 
 import org.junit.Test;
 

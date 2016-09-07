@@ -43,42 +43,6 @@
             android:layout_gravity="center_horizontal|bottom"
             android:gravity="bottom">
 
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:id="@+id/btn_z_add"
-                android:background="@android:drawable/ic_input_add"
-                android:layout_marginLeft="20dp"
-                android:onClick="zajavAddClick" />
-
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:id="@+id/btn_z_del"
-                android:background="@android:drawable/ic_delete"
-                android:layout_marginLeft="20dp"
-                android:onClick="zajavDeleteClick" />
-
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:id="@+id/btn_z_head"
-                android:background="@android:drawable/ic_menu_edit"
-                android:layout_marginLeft="20dp"
-                android:onClick="zajavHeadClick" />
-
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:id="@+id/btn_z_spec"
-                android:background="@android:drawable/ic_input_get"
-                android:layout_marginLeft="20dp"
-                android:onClick="zajavSpecClick" />
-
         </LinearLayout>
     </LinearLayout>
 

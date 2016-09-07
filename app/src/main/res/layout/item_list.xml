@@ -9,7 +9,7 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context="com.example.cat.zajav.ItemListActivity"
+    tools:context="com.example.cat.sqliteportactivity.DataBrowser"
     tools:listitem="@layout/item_list_content"
     android:choiceMode="singleChoice"
     android:clickable="true"

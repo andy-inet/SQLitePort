@@ -1,4 +1,4 @@
-package com.example.cat.zajav;
+package com.example.cat.sqliteport;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,11 +9,11 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class ZajavDBHelper extends SQLiteOpenHelper {
+public class PortDBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "local.db"; // название бд
-	private static final int SCHEMA = 2; // версия базы данных
+	private static final int SCHEMA = 1; // версия базы данных
 	static final String TBL_ZAJAV = "ZAJAV"; // название таблиц в бд
-	static final String TBL_SPEC = "ZAJZVSPEC";
+	static final String TBL_SPEC = "ZAJAVSPEC";
 	static final String TBL_RES = "RESOURCES";
     // названия столбцов
     public static final String Z_ID = "_id";
@@ -23,17 +23,17 @@ public class ZajavDBHelper extends SQLiteOpenHelper {
     public static final String S_ID = "_id";
     public static final String S_ZID = "Z_ID";
 	public static final String S_RES = "RES_ID";
-	public static final String S_RESNAME = "RES_NAME";
     public static final String S_QUANTITY = "QUANTITY";
     public static final String S_COST = "RESCOST";
-    public static final String R_ID =  "_id";
+	public static final String R_ID =  "_id";
+	public static final String R_PARENT =  "pid";
     public static final String R_NAME =  "NAME";
 
 	private final Context mCtx;
 	public static SQLiteDatabase mDB;
-	public static ZajavDBHelper sqlHelper;
+	public static PortDBHelper sqlHelper;
 
-    public ZajavDBHelper(Context context) {
+    public PortDBHelper(Context context) {
 
 		super(context, DATABASE_NAME, null, SCHEMA);
 		mCtx = context;
@@ -62,60 +62,37 @@ public class ZajavDBHelper extends SQLiteOpenHelper {
                 + ");");
 		db.execSQL("CREATE TABLE "+TBL_RES+" ("
 				+ R_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+				+ R_PARENT + " INTEGER,"
 				+ R_NAME + " text"
 				+ ");");
 
 		// добавление начальных данных */
-/*
-        db.execSQL("INSERT INTO "+ semaphores +" (" + C_NAME +", "+ C_ID + ") VALUES ('��� ����',1);");
-        db.execSQL("INSERT INTO "+ smph_specification +" (" + C_ID +","+
-        		C_MSTASK_ID+","+ C_SMPH_ID+","+C_POSITION_NUM+","+ C_NAME+","+C_COLOR+"," 
-                + C_POINTENTER+","+ C_SUMMA+","+ C_PERCENT+","+ C_PERCENT_REL+","+C_FULLNAME 
-        		+") VALUES (" + C_ID +","+
-        		C_MSTASK_ID+","+ C_SMPH_ID+","+C_POSITION_NUM+","+ C_NAME+","+C_COLOR+"," 
-                + C_POINTENTER+","+ C_SUMMA+","+ C_PERCENT+","+ C_PERCENT_REL+","+C_FULLNAME 
-        		+");");
- 
-      select 'db.execSQL("INSERT INTO "+ semaphores +" (" + C_NAME +", "+ C_ID + ") VALUES ('''||name||''','||id||');");' from m2_all.semaphores#F s
-      select
-        'db.execSQL("INSERT INTO "+ smph_specification +" (" + C_ID +","+
-                C_MSTASK_ID+","+ C_SMPH_ID+","+C_POSITION_NUM+","+ C_NAME+","+C_COLOR+"," 
-                + C_POINTENTER+","+ C_SUMMA+","+ C_PERCENT+","+ C_PERCENT_REL+","+C_FULLNAME 
-                +") VALUES ('||ID||' ,'||nvl(to_char(MSTASK_ID),null)||', '||nvl(to_char(SMPH_ID),null)||', '||
-                nvl(to_char(POSITION_NUM),null)||', '''||NAME||''','||nvl(to_char(COLOR),null)||', '
-                ||nvl(to_char(POINTENTER),null)||','||nvl(to_char(SUMMA),null)||','||nvl(to_char(PERCENT),null)||','||
-                nvl(to_char(PERCENT_REL),null)||','''||FULLNAME||''');");'        
- from m2_all.smph_specification#f where smph_id in (select id from m2_all.semaphores#F s)  
-     order by smph_id,position_num    
-
- */
-
 		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", "+ R_NAME + ") VALUES (11, 'Детали');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", "+ R_NAME + ") VALUES (101, 'Ячейка ВЧ 845');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", "+ R_NAME + ") VALUES (102, 'Корпус защищенный');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", "+ R_NAME + ") VALUES (103, 'Пульт сопряжения ПРМИ 1298');");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (101, 11, 'Ячейка ВЧ 845');");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (102, 11, 'Корпус защищенный');");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (103, 11, 'Пульт сопряжения ПРМИ 1298');");
 
 		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", "+ R_NAME + ") VALUES (12, 'Заготовки');");
 
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", "+ R_NAME + ") VALUES (21, 'Болванки');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", "+ R_NAME + ") VALUES (104, 'Болванка 7001');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", "+ R_NAME + ") VALUES (105, 'Болванка 5-500');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", "+ R_NAME + ") VALUES (106, 'Болванка 4');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", "+ R_NAME + ") VALUES (107, 'Болванка 4а');");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (21, 12, 'Болванки');");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (104, 21, 'Болванка 7001');");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (105, 21, 'Болванка 5-500');");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (106, 21, 'Болванка 4');");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (107, 21, 'Болванка 4а');");
 
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", "+ R_NAME + ") VALUES (22, 'Пруток');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", "+ R_NAME + ") VALUES (108, 'Пруток М6');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", "+ R_NAME + ") VALUES (109, 'Пруток ГП4Х');");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (22, 12, 'Пруток');");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (108, 22, 'Пруток М6');");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (109, 22, 'Пруток ГП4Х');");
 
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", "+ R_NAME + ") VALUES (23, 'Штамповка');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", "+ R_NAME + ") VALUES (110, 'Штамповка ГП4-08');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", "+ R_NAME + ") VALUES (111, 'Штамповка ГП4-92');");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (23, 12, 'Штамповка');");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (110, 23, 'Штамповка ГП4-08');");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (111, 23, 'Штамповка ГП4-92');");
 
 		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", "+ R_NAME + ") VALUES (13, 'Комплектующие изделия');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", "+ R_NAME + ") VALUES (112, 'Насос');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", "+ R_NAME + ") VALUES (113, 'Аптечка');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", "+ R_NAME + ") VALUES (114, 'Набор инструментов');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", "+ R_NAME + ") VALUES (115, 'Огнетушитель');");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (112, 13, 'Насос');");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (113, 13, 'Аптечка');");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (114, 13, 'Набор инструментов');");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (115, 13, 'Огнетушитель');");
 
 
 		db.execSQL("INSERT INTO "+ TBL_ZAJAV +" (" + Z_ID +", "+ Z_DATE + ", " + Z_STRCODE + ", " + Z_NOTE +") VALUES (1, '22.08.2016', '1', 'Комментарий');");

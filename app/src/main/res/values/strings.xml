@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">Заявки</string>
-    <string name="title_item_detail">Заявка</string>
-    <string name="title_spec_list">Спецификация заявки</string>
+    <string name="app_name">SQLitePort</string>
+    <string name="title_data_browser">Data Browser</string>
 </resources>

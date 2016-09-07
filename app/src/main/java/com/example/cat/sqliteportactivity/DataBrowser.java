@@ -1,8 +1,8 @@
-package com.example.cat.zajav;
+package com.example.cat.sqliteportactivity;
 
-import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.content.CursorLoader;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,48 +13,42 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.List;
+import com.example.cat.sqliteport.PortDBHelper;
+import com.example.cat.sqliteport.R;
 
-/**
- * An activity representing a list of Items. This activity
- * has different presentations for handset and tablet-size devices. On
- * handsets, the activity presents a list of items, which when touched,
- * lead to a {@link ItemDetailActivity} representing
- * item details. On tablets, the activity presents the list of items and
- * item details side-by-side using two vertical panes.
- */
-public class SpecListActivity extends AppCompatActivity {
+public class DataBrowser extends AppCompatActivity {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
+    static final Uri ZAJAV_URI = Uri.parse("content://com.example.cat.sqliteport/zajav");
     private boolean mTwoPane;
     Cursor semCursor, semSpecCur;
-    private SimpleCursorAdapter SpecAdapter;
+    private SimpleCursorAdapter ZajavAdapter;
     private String zajavID;
-    private String specID;
-    private Cursor sCursor;
+    private Cursor zCursor;
     private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_spec_list);
+        setContentView(R.layout.activity_item_list);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-        zajavID=getIntent().getStringExtra(ItemDetailFragment.ARG_ID);
-
-        listView = (ListView) findViewById(R.id.spec_list);
+        listView = (ListView) findViewById(R.id.zajav_list);
 
         LayoutInflater inflater = getLayoutInflater();
-        ViewGroup header = (ViewGroup) inflater.inflate(R.layout.s_header, listView, false);
+        ViewGroup header = (ViewGroup) inflater.inflate(R.layout.z_header, listView, false);
         listView.addHeaderView(header, null, true);
+
+
+        // открываем подключение
+//        PortDBHelper.sqlHelper = new PortDBHelper(this);
 
 
         displayListView();
@@ -96,36 +90,35 @@ public class SpecListActivity extends AppCompatActivity {
 
     private void displayListView() {
 
-
-//        Cursor cursor = ZajavDBHelper.fetchAllZajavs();
-        if (sCursor != null)
-            sCursor.close();
-
-        sCursor = ZajavDBHelper.fetchAllSpec(zajavID);
-
         // The desired columns to be bound
         String[] columns = new String[]{
-                ZajavDBHelper.S_ID,
-                ZajavDBHelper.S_RES,
-                ZajavDBHelper.S_RESNAME,
-                ZajavDBHelper.S_QUANTITY,
-                ZajavDBHelper.S_COST
+                PortDBHelper.Z_ID,
+                PortDBHelper.Z_STRCODE,
+                PortDBHelper.Z_DATE,
+                PortDBHelper.Z_NOTE
         };
+
+//        Cursor cursor = PortDBHelper.fetchAllZajavs();
+        if (zCursor != null)
+            zCursor.close();
+
+        zCursor = getContentResolver().query(ZAJAV_URI,
+                columns, null, null, null);
+
 
         // the XML defined views which the data will be bound to
         int[] to = new int[]{
-                R.id.s_id,
-                R.id.s_res,
-                R.id.s_resname,
-                R.id.s_quantity,
-                R.id.s_cost
+                R.id.z_id,
+                R.id.z_strcode,
+                R.id.z_date,
+                R.id.z_note
         };
 
         // create the adapter using the cursor pointing to the desired data
         //as well as the layout information
-        SpecAdapter = new SimpleCursorAdapter(
-                this, R.layout.spec_list_content,
-                sCursor,
+        ZajavAdapter = new SimpleCursorAdapter(
+                this, R.layout.item_list_content,
+                zCursor,
                 columns,
                 to,
                 0);
@@ -135,7 +128,7 @@ public class SpecListActivity extends AppCompatActivity {
 
         LayoutInflater inflater = getLayoutInflater();
 
-        listView.setAdapter(SpecAdapter);
+        listView.setAdapter(ZajavAdapter);
 
         TextView tv = (TextView) findViewById(R.id.textView);
 
@@ -148,54 +141,21 @@ public class SpecListActivity extends AppCompatActivity {
 //                listView.setSelection(position);
 
                 // Get the state's capital from this row in the database.
-                specID =
-                        sCursor.getString(sCursor.getColumnIndexOrThrow("_id"));
+                zajavID =
+                        zCursor.getString(zCursor.getColumnIndexOrThrow("_id"));
 //                Toast.makeText(getApplicationContext(),
 //                        zajavID, Toast.LENGTH_SHORT).show();
 
             }
         });
 
-    }
-
-
-    public void specAddClick(View view) {
-
-        Intent resIntent = new Intent(Intent.ACTION_VIEW);
-        resIntent.addCategory("SPR_RESOURCES");
- //       resIntent.setType("*/*");
-
-        PackageManager packageManager = getPackageManager();
-        List activities = packageManager.queryIntentActivities(resIntent,
-                PackageManager.MATCH_ALL);
-        if (activities.size() == 0)
-        Toast.makeText(getApplicationContext(),"Нет поставшика контента для 'SPR_RESOURCES'.", Toast.LENGTH_SHORT).show();
-        else{
-            startActivityForResult(resIntent, 110);
- //           startActivity (resIntent);
-        }
 
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request we're responding to
- //       if (requestCode == PICK_CONTACT_REQUEST) {
-            // Make sure the request was successful
-            if (resultCode > 0) {
-                int id=ZajavDBHelper.addSpec(zajavID, resultCode);
-            }
-   //     }
-    }
 
 
 
-    public void specDeleteClick(View view) {
 
-//        Toast.makeText(getApplicationContext(),
-//                zajavID + "  Delete", Toast.LENGTH_SHORT).show();
-        ZajavDBHelper.deleteSpec(specID);
-        displayListView();
-    }
+
 }

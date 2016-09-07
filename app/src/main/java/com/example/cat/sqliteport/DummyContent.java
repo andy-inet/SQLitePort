@@ -1,4 +1,4 @@
-package com.example.cat.zajav.dummy;
+package com.example.cat.sqliteport;
 
 import java.util.ArrayList;
 import java.util.HashMap;
