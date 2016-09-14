@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">SQLitePort</string>
     <string name="title_data_browser">Data Browser</string>
+    <string name="title_activity_table_data">TableDataActivity</string>
 </resources>

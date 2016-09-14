@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".MainActivity">
+    android:onClick="onClick"
+    android:nestedScrollingEnabled="false">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -29,21 +30,98 @@
         <FrameLayout
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"
-            android:layout_height="455dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_height="0dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_weight="1"
+            android:layout_marginTop="80dp">
 
-            <include layout="@layout/item_list" />
+            <include layout="@layout/item_list"
+                 />
 
 
         </FrameLayout>
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_gravity="center_horizontal|bottom"
-            android:gravity="bottom">
+            android:gravity="bottom"
+            android:background="@color/black">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="mode="
+                android:id="@+id/textView"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/white"
+                android:layout_margin="5dp" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/etMode"
+                android:layout_weight="0.54"
+                android:text="Q"
+                android:textColor="@color/black"
+                android:background="@color/BeeCream"
+                android:padding="5dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="_id="
+                android:id="@+id/textView5"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:textColor="@color/white"
+                android:layout_margin="5dp" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/etID"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:background="@color/BeeCream"
+                android:padding="5dp" />
 
         </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="     "
+                android:id="@+id/tv_Selected"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/Yellow"
+                android:textSize="24dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:background="@color/black">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Открыть"
+                android:id="@+id/btnOpen"
+                android:onClick="onClick" />
+        </LinearLayout>
+
     </LinearLayout>
 
 

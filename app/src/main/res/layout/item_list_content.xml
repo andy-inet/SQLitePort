@@ -25,32 +25,16 @@
         android:gravity="left"
         android:layout_gravity="left" />
 -->
-    <TextView
-        android:id="@+id/z_strcode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:gravity="left"
-        android:layout_gravity="left" />
 
     <TextView
-        android:id="@+id/z_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:gravity="left"
-        android:layout_gravity="left" />
-
-    <TextView
-        android:id="@+id/z_note"
+        android:id="@+id/z_tbl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
         android:textAppearance="?attr/textAppearanceListItem"
         android:gravity="left"
-        android:layout_gravity="left" />
+        android:layout_gravity="left"
+        android:textIsSelectable="false" />
 
     <TextView
         android:id="@+id/z_id"

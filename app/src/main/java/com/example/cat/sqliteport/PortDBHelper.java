@@ -27,7 +27,8 @@ public class PortDBHelper extends SQLiteOpenHelper {
     public static final String S_COST = "RESCOST";
 	public static final String R_ID =  "_id";
 	public static final String R_PARENT =  "pid";
-    public static final String R_NAME =  "NAME";
+	public static final String R_NAME =  "RNAME";
+	public static final String R_COST =  "RCOST";
 
 	private final Context mCtx;
 	public static SQLiteDatabase mDB;
@@ -46,8 +47,9 @@ public class PortDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
 		mDB=db;
- 
-        db.execSQL("CREATE TABLE "+TBL_ZAJAV+" ("
+
+		db.execSQL("CREATE TABLE DUAL (_id INTEGER PRIMARY KEY AUTOINCREMENT);");
+		db.execSQL("CREATE TABLE "+TBL_ZAJAV+" ("
 				+ Z_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ Z_STRCODE + " TEXT,"
 				+ Z_DATE + " DATE,"
@@ -63,36 +65,39 @@ public class PortDBHelper extends SQLiteOpenHelper {
 		db.execSQL("CREATE TABLE "+TBL_RES+" ("
 				+ R_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ R_PARENT + " INTEGER,"
-				+ R_NAME + " text"
+				+ R_NAME + " text,"
+				+ R_COST + " real"
 				+ ");");
 
 		// добавление начальных данных */
+		db.execSQL("INSERT INTO DUAL(_id) VALUES (1);");
+
 		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", "+ R_NAME + ") VALUES (11, 'Детали');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (101, 11, 'Ячейка ВЧ 845');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (102, 11, 'Корпус защищенный');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (103, 11, 'Пульт сопряжения ПРМИ 1298');");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME +", "+ R_COST + ") VALUES (101, 11, 'Ячейка ВЧ 845', 4500);");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME +", "+ R_COST + ") VALUES (102, 11, 'Корпус защищенный', 1370);");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME +", "+ R_COST + ") VALUES (103, 11, 'Пульт сопряжения ПРМИ 1298', 7800);");
 
 		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", "+ R_NAME + ") VALUES (12, 'Заготовки');");
 
 		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (21, 12, 'Болванки');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (104, 21, 'Болванка 7001');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (105, 21, 'Болванка 5-500');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (106, 21, 'Болванка 4');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (107, 21, 'Болванка 4а');");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME +", "+ R_COST + ") VALUES (104, 21, 'Болванка 7001',120);");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME +", "+ R_COST + ") VALUES (105, 21, 'Болванка 5-500', 23.70);");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME +", "+ R_COST + ") VALUES (106, 21, 'Болванка 4', 780);");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME +", "+ R_COST + ") VALUES (107, 21, 'Болванка 4а', 780);");
 
 		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (22, 12, 'Пруток');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (108, 22, 'Пруток М6');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (109, 22, 'Пруток ГП4Х');");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME +", "+ R_COST + ") VALUES (108, 22, 'Пруток М6', 13);");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME +", "+ R_COST + ") VALUES (109, 22, 'Пруток ГП4Х', 4);");
 
 		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (23, 12, 'Штамповка');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (110, 23, 'Штамповка ГП4-08');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (111, 23, 'Штамповка ГП4-92');");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME +", "+ R_COST + ") VALUES (110, 23, 'Штамповка ГП4-08', 65);");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME +", "+ R_COST + ") VALUES (111, 23, 'Штамповка ГП4-92', 18);");
 
 		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", "+ R_NAME + ") VALUES (13, 'Комплектующие изделия');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (112, 13, 'Насос');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (113, 13, 'Аптечка');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (114, 13, 'Набор инструментов');");
-		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME + ") VALUES (115, 13, 'Огнетушитель');");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME +", "+ R_COST + ") VALUES (112, 13, 'Насос', 160);");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME +", "+ R_COST + ") VALUES (113, 13, 'Аптечка', 270);");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME +", "+ R_COST + ") VALUES (114, 13, 'Набор инструментов', 1400);");
+		db.execSQL("INSERT INTO "+ TBL_RES +" (" + R_ID +", " + R_PARENT +", "+ R_NAME +", "+ R_COST + ") VALUES (115, 13, 'Огнетушитель', 2400);");
 
 
 		db.execSQL("INSERT INTO "+ TBL_ZAJAV +" (" + Z_ID +", "+ Z_DATE + ", " + Z_STRCODE + ", " + Z_NOTE +") VALUES (1, '22.08.2016', '1', 'Комментарий');");
@@ -114,6 +119,7 @@ public class PortDBHelper extends SQLiteOpenHelper {
 	}
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion,  int newVersion) {
+		db.execSQL("DROP TABLE IF EXISTS DUAL");
 		db.execSQL("DROP TABLE IF EXISTS "+TBL_SPEC);
 		db.execSQL("DROP TABLE IF EXISTS "+TBL_ZAJAV);
 		db.execSQL("DROP TABLE IF EXISTS "+TBL_RES);
